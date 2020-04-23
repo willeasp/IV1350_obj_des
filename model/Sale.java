@@ -31,10 +31,34 @@ public class Sale {
 	 * Adds an <code>item</code> to the list of items in the current sale.
 	 * @param item The item to be added in the sale.
 	 */
-	public void addItem(ItemDTO item) {
-		if(item.itemFound())
-			this.itemList.addLast(item);
+	public void addItem(ItemDTO newItem) {
+		if(newItem.itemFound()) {
+			boolean equalID = false;
+			for(ItemDTO item : this.itemList) {
+				if(equalIdentifier(newItem, item)) {
+					item.setQuantity(newQuantity(item, newItem));
+					equalID = true;
+					break;
+				}
+			}
+			if(!(equalID))
+				this.itemList.addLast(newItem);
+		}
 		updateInfo();
+	}
+	
+	/**
+	 * Adds the quantities of items. Usable when an item has to update its 
+	 * @param item	First item
+	 * @param newItem	Second item
+	 * @return	The new quantity.
+	 */
+	private int newQuantity(ItemDTO item, ItemDTO newItem) {
+		return item.getQuantity() + newItem.getQuantity();
+	}
+	
+	private boolean equalIdentifier(ItemDTO newItem, ItemDTO item) {
+		return item.getItemIdentifier() == newItem.getItemIdentifier();
 	}
 
 	/**
@@ -44,7 +68,7 @@ public class Sale {
 		this.totalBeforeDiscount = 0;
 		this.VAT = 0;
 		for(ItemDTO item : itemList) {
-			this.totalBeforeDiscount += item.getPrice();
+			this.totalBeforeDiscount += item.getPrice() * item.getQuantity();
 			this.VAT += item.getVAT();
 		}		
 	}

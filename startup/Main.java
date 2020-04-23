@@ -24,6 +24,10 @@ public class Main {
 		// simulating the cashier pressing buttons
 		view.startNewSale();
 		view.registerItem(42069, 3);
+		view.registerItem(55555, 1);
+		view.registerItem(42069, 2);
+		view.registerItem(55555, 5);
+		view.registerItem(11111, 3);
 	}
 
 }

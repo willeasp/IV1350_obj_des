@@ -47,6 +47,10 @@ public class ItemDTO {
 	public boolean itemFound() {
 		return itemFound;
 	}
+	
+	public void setQuantity (int quantity) {
+		this.quantity = quantity;
+	}
 
 
 

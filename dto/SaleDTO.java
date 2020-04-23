@@ -1,6 +1,7 @@
 package dto;
 
 import model.Sale;
+import java.lang.StringBuilder;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
@@ -35,6 +36,16 @@ public class SaleDTO {
 		this.date = sale.getDate();
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Total: " + this.totalBeforeDiscount + "$");
+		sb.append("\n\nItems: \n");
+		for(ItemDTO item : this.itemList) {
+			sb.append(item.getName() + ", " + item.getPrice() + "$\n");
+		}
+		return sb.toString();
+	}
 	
 	public java.time.LocalTime getStartTime() {
 		return startTime;
