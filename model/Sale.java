@@ -7,15 +7,16 @@ import dto.SaleDTO;
 import integration.Printer;
 import dto.ItemDTO;
 import dto.PaymentDTO;
+import dto.ReceiptDTO;
 
 public class Sale {
 	private java.time.LocalTime startTime;
-	private double totalBeforeDiscount;
-	private double totalAfterDiscount;
+	private double totalPrice;		// Including VAT
+	private double totalVAT;		// VAT value added to total
 	private LinkedList<ItemDTO> itemList;
+	private int amountPaid;
 	private double change;
 	private DiscountDTO discount;
-	private double VAT;
 	private static String storeName = "Willes Feta Matbutik";
 	private static String storeAddress = "Matgatan 3000";
 	private java.time.LocalDate date;
@@ -25,6 +26,7 @@ public class Sale {
 		this.startTime = java.time.LocalTime.now();
 		this.date = java.time.LocalDate.now();
 		this.itemList = new LinkedList<ItemDTO>();
+		this.printer = printer;
 	}
 
 	/**
@@ -36,25 +38,26 @@ public class Sale {
 			boolean equalID = false;
 			for(ItemDTO item : this.itemList) {
 				if(equalIdentifier(newItem, item)) {
-					item.setQuantity(newQuantity(item, newItem));
+					newQuantity(item, newItem);
 					equalID = true;
 					break;
 				}
 			}
-			if(!(equalID))
+			if(!equalID)
 				this.itemList.addLast(newItem);
 		}
+		
 		updateInfo();
 	}
 	
 	/**
-	 * Adds the quantities of items. Usable when an item has to update its 
+	 * Adds the quantities of items. Usable when an item has to update its quantity
 	 * @param item	First item
 	 * @param newItem	Second item
 	 * @return	The new quantity.
 	 */
-	private int newQuantity(ItemDTO item, ItemDTO newItem) {
-		return item.getQuantity() + newItem.getQuantity();
+	private void newQuantity(ItemDTO item, ItemDTO newItem) {
+		item.setQuantity(item.getQuantity() + newItem.getQuantity());
 	}
 	
 	private boolean equalIdentifier(ItemDTO newItem, ItemDTO item) {
@@ -65,14 +68,26 @@ public class Sale {
 	 * Updates <code>price</code> and <code>VAT</code> for the current sale.
 	 */
 	private void updateInfo() {
-		this.totalBeforeDiscount = 0;
-		this.VAT = 0;
+		this.totalPrice = 0;
+		this.totalVAT = 0;
 		for(ItemDTO item : itemList) {
-			this.totalBeforeDiscount += item.getPrice() * item.getQuantity();
-			this.VAT += item.getVAT();
-		}		
+			this.totalPrice += itemTotalPrice(item);
+			this.totalVAT += itemTotalVAT(item);
+		}	
+	}
+	
+	private double itemTotalVAT (ItemDTO item) {
+		return item.getPrice() * item.getQuantity() * item.getVAT();
+	}
+	
+	private double itemTotalPrice (ItemDTO item) {
+		return item.getPrice() * item.getQuantity() * (1 + item.getVAT());
 	}
 
+	/**
+	 * 
+	 * @return Current state of the <code>Sale</code>.
+	 */
 	public SaleDTO getCurrent() {
 		return new SaleDTO(this);
 	}
@@ -82,7 +97,11 @@ public class Sale {
 	}
 
 	public void saleCompleted(PaymentDTO amountPaid) {
-
+		this.amountPaid = amountPaid.getAmount();
+		this.change = this.amountPaid - this.totalPrice;
+		SaleDTO completedSale = new SaleDTO(this);
+		ReceiptDTO receipt = new ReceiptDTO(completedSale);
+		this.printer.printReceipt(receipt);
 	}
 	
 
@@ -90,13 +109,11 @@ public class Sale {
 		return startTime;
 	}
 
-	public double getTotalBeforeDiscount() {
-		return totalBeforeDiscount;
+	public double gettotalPrice() {
+		return totalPrice;
 	}
 
-	public double getTotalAfterDiscount() {
-		return totalAfterDiscount;
-	}
+	
 
 	public LinkedList<ItemDTO> getItemList() {
 		return new LinkedList<ItemDTO>(itemList);
@@ -110,8 +127,8 @@ public class Sale {
 		return discount;
 	}
 
-	public double getVAT() {
-		return VAT;
+	public double getTotalVAT() {
+		return totalVAT;
 	}
 
 	public static String getStoreName() {
@@ -128,6 +145,10 @@ public class Sale {
 
 	public Printer getPrinter() {
 		return printer;
+	}
+	
+	public int getAmountPaid() {
+		return amountPaid;
 	}
 
 	

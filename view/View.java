@@ -19,11 +19,13 @@ public class View {
 		ItemEntryDTO itemEntry = new ItemEntryDTO(itemIdentifier, quantity);
 		ItemDTO item = this.controller.registerItem(itemEntry);
 		if(item.itemFound()) {
+			displayItem(item);
 			this.currentSale = this.controller.getCurrentSale();
 		}
 		else {
-			System.out.println("Item not found.\n");
+			System.out.println("*Item not found.* ID: " + item.getItemIdentifier());
 		}
+		
 		
 		displayCurrentSale();
 	}
@@ -32,16 +34,31 @@ public class View {
 		this.controller.startNewSale();
 	}
 	
-	public void displayCurrentSale() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Total: " + this.currentSale.getTotalBeforeDiscount() + "$");
+	public void endSale() {
+		this.currentSale = this.controller.endSale();
+	}
+	
+	public void payment (int amount) {
+		PaymentDTO amountPaid = new PaymentDTO(amount);
+		this.controller.payment(amountPaid);
 		
+	}
+	
+	private void displayItem(ItemDTO item) {
+		System.out.println(item.getName() + ", " + item.getDescription() + " : " + item.getPrice() + "$, " + item.getVAT()*100 + "% VAT\n");
+	}
+	
+	private void displayCurrentSale() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Total: " + this.currentSale.gettotalPrice() + "$  |  of which VAT: " + this.currentSale.getTotalVAT() + "$");
 		
 		sb.append("\n\nItems: \n");
 		for(ItemDTO item : this.currentSale.getItemList()) {
 			sb.append(item.getName() + ", " + item.getPrice() + "$ * " + item.getQuantity() + " : " + item.getPrice()*item.getQuantity() + "$\n");
 		}
+		sb.append("\n***************************************\n");
 		System.out.println(sb.toString());
 	}
+	
 
 }

@@ -2,14 +2,14 @@ package dto;
 
 public class PaymentDTO {
 
-	private float amount;
+	private int amount;
 
-	public void PaymentDTO(int amount) {
-
+	public PaymentDTO(int amount) {
+		this.amount = amount;
 	}
 
-	public float getAmount() {
-		return 0;
+	public int getAmount() {
+		return amount;
 	}
 
 }

@@ -5,8 +5,6 @@ import java.lang.StringBuilder;
 import java.time.LocalTime;
 import java.util.LinkedList;
 
-import integration.Printer;
-
 import java.time.LocalDate;
 
 /**
@@ -15,46 +13,47 @@ import java.time.LocalDate;
  */
 public class SaleDTO {
 	private java.time.LocalTime startTime;
-	private double totalBeforeDiscount;
-	private double totalAfterDiscount;
+	private double totalPrice;
 	private LinkedList<ItemDTO> itemList;
 	private double change;
 	private DiscountDTO discount;
-	private double VAT;
-	private static String storeName = "Willes Feta Matbutik";
-	private static String storeAddress = "Matgatan 3000";
+	private double totalVAT;
+	private String storeName;
+	private String storeAddress;
 	private java.time.LocalDate date;
 	
+	/**
+	 * Carrier for Sale information
+	 * @param sale
+	 */
 	public SaleDTO(Sale sale) {
 		this.startTime = sale.getStartTime();
-		this.totalBeforeDiscount = sale.getTotalBeforeDiscount();
-		this.totalAfterDiscount = sale.getTotalAfterDiscount();
+		this.totalPrice = sale.gettotalPrice();
 		this.itemList = sale.getItemList();
 		this.change = sale.getChange();
 		this.discount = sale.getDiscount();
-		this.VAT = sale.getVAT();
+		this.totalVAT = sale.getTotalVAT();
+		this.storeName = Sale.getStoreName();
+		this.storeAddress = Sale.getStoreAddress();
 		this.date = sale.getDate();
 	}
 	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Total: " + this.totalBeforeDiscount + "$");
-		sb.append("\n\nItems: \n");
-		for(ItemDTO item : this.itemList) {
-			sb.append(item.getName() + ", " + item.getPrice() + "$\n");
-		}
-		return sb.toString();
-	}
+//	@Override
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("Total: " + this.totalPrice + "$");
+//		sb.append("\n\nItems: \n");
+//		for(ItemDTO item : this.itemList) {
+//			sb.append(item.getName() + ", " + item.getPrice() + "$\n");
+//		}
+//		return sb.toString();
+//	}
 	
 	public java.time.LocalTime getStartTime() {
 		return startTime;
 	}
-	public double getTotalBeforeDiscount() {
-		return totalBeforeDiscount;
-	}
-	public double getTotalAfterDiscount() {
-		return totalAfterDiscount;
+	public double gettotalPrice() {
+		return totalPrice;
 	}
 	public LinkedList<ItemDTO> getItemList() {
 		return itemList;
@@ -65,13 +64,13 @@ public class SaleDTO {
 	public DiscountDTO getDiscount() {
 		return discount;
 	}
-	public double getVAT() {
-		return VAT;
+	public double getTotalVAT() {
+		return totalVAT;
 	}
-	public static String getStoreName() {
+	public String getStoreName() {
 		return storeName;
 	}
-	public static String getStoreAddress() {
+	public String getStoreAddress() {
 		return storeAddress;
 	}
 	public java.time.LocalDate getDate() {

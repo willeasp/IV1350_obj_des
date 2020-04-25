@@ -13,7 +13,7 @@ public class ExternalInventorySystem {
 					69.420, 
 					itemEntry.getQuantity(), 
 					"Senapslök odlad i mellersta Grums.", 
-					0.15, 
+					0.25, 
 					true									);
 			return item;
 		}
@@ -23,7 +23,17 @@ public class ExternalInventorySystem {
 					3.1415, 
 					itemEntry.getQuantity(), 
 					"Läskiga bullar som spökar i magen", 
-					0.13, 
+					0.12, 
+					true									);
+			return item;
+		}
+		if(itemEntry.getItemIdentifier() == 10721) {
+			ItemDTO item = new ItemDTO(	itemEntry.getItemIdentifier(), 
+					"Mos", 
+					7.0, 
+					itemEntry.getQuantity(), 
+					"Rotmos ur Centralamerikas djupaste skogar.", 
+					0.06, 
 					true									);
 			return item;
 		}

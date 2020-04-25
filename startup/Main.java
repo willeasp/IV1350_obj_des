@@ -28,6 +28,10 @@ public class Main {
 		view.registerItem(42069, 2);
 		view.registerItem(55555, 5);
 		view.registerItem(11111, 3);
+		view.registerItem(12173, 3);
+		view.registerItem(10721, 5);
+		view.endSale();
+		view.payment(1000);
 	}
 
 }

@@ -1,56 +1,70 @@
 package dto;
 
 import java.time.LocalTime;
+import java.util.LinkedList;
 import java.time.LocalDate;
 
-import model.Sale;
+import dto.SaleDTO;
 
 public class ReceiptDTO {
-
-	private LocalDate date;
-
-	private LocalTime startTime;
-
+	private java.time.LocalTime startTime;
+	private double totalPrice;
+	private LinkedList<ItemDTO> itemList;
+	private double change;
+	private DiscountDTO discount;
+	private double totalVAT;
 	private String storeName;
-
 	private String storeAddress;
+	private java.time.LocalDate date;
 
-	private java.util.Arrays items;
-
-	private float totalPrice;
-
-	private float VAT;
-
-	public ReceiptDTO ReceiptDTO(Sale completedSale) {
-		return null;
+	public ReceiptDTO(SaleDTO completedSale) {
+		this.date = completedSale.getDate();
+		this.startTime = completedSale.getStartTime();
+		this.itemList = completedSale.getItemList();
+		this.totalPrice = completedSale.gettotalPrice();
+		this.change = completedSale.getChange();
+		this.discount = completedSale.getDiscount();
+		this.totalVAT = completedSale.getTotalVAT();
+		this.storeName = completedSale.getStoreName();
+		this.storeAddress = completedSale.getStoreAddress();
+		
 	}
 
-	public float getVAT() {
-		return 0;
+	public java.time.LocalTime getStartTime() {
+		return startTime;
 	}
 
-	public float getTotalPrice() {
-		return 0;
+	public double getTotalPrice() {
+		return totalPrice;
 	}
 
-	public java.util.Arrays getItems() {
-		return null;
+	public LinkedList<ItemDTO> getItemList() {
+		return itemList;
 	}
 
-	public String getStoreAddress() {
-		return null;
+	public double getChange() {
+		return change;
+	}
+
+	public DiscountDTO getDiscount() {
+		return discount;
+	}
+
+	public double getTotalVAT() {
+		return totalVAT;
 	}
 
 	public String getStoreName() {
-		return null;
+		return storeName;
 	}
 
-	public LocalTime getStartTime() {
-		return null;
+	public String getStoreAddress() {
+		return storeAddress;
 	}
 
-	public LocalDate getDate() {
-		return null;
+	public java.time.LocalDate getDate() {
+		return date;
 	}
 
+	
 }

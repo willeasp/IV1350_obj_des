@@ -4,18 +4,18 @@ import dto.PaymentDTO;
 
 public class Register {
 
-	private float balance;
+	private double balance;
 
 	public void increaseBalance(PaymentDTO amountPaid) {
-
+		this.balance += amountPaid.getAmount();
 	}
 
-	public Register Register() {
-		return null;
+	public Register() {
+		this.balance = 1003.98;
 	}
 
-	public float getBalance() {
-		return 0;
+	public double getBalance() {
+		return balance;
 	}
 
 }

@@ -51,7 +51,7 @@ public class Controller {
 	}
 
 	public SaleDTO endSale() {
-		return null;
+		return getCurrentSale();
 	}
 
 	public SaleDTO getCurrentSale() {
@@ -63,7 +63,9 @@ public class Controller {
 	}
 
 	public void payment(PaymentDTO amountPaid) {
-
+		this.register.increaseBalance(amountPaid);
+		this.sale.saleCompleted(amountPaid);
+		
 	}
 
 }
