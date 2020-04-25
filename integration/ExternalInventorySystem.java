@@ -30,7 +30,7 @@ public class ExternalInventorySystem {
 		if(itemEntry.getItemIdentifier() == 10721) {
 			ItemDTO item = new ItemDTO(	itemEntry.getItemIdentifier(), 
 					"Mos", 
-					7.0, 
+					6.99, 
 					itemEntry.getQuantity(), 
 					"Rotmos ur Centralamerikas djupaste skogar.", 
 					0.06, 

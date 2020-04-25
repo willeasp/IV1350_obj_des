@@ -96,12 +96,13 @@ public class Sale {
 
 	}
 
-	public void saleCompleted(PaymentDTO amountPaid) {
+	public SaleDTO saleCompleted(PaymentDTO amountPaid) {
 		this.amountPaid = amountPaid.getAmount();
 		this.change = this.amountPaid - this.totalPrice;
 		SaleDTO completedSale = new SaleDTO(this);
 		ReceiptDTO receipt = new ReceiptDTO(completedSale);
 		this.printer.printReceipt(receipt);
+		return completedSale;
 	}
 	
 

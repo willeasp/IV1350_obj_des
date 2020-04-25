@@ -62,10 +62,13 @@ public class Controller {
 
 	}
 
-	public void payment(PaymentDTO amountPaid) {
+	public double payment(PaymentDTO amountPaid) {
 		this.register.increaseBalance(amountPaid);
-		this.sale.saleCompleted(amountPaid);
-		
+		SaleDTO completedSale = this.sale.saleCompleted(amountPaid);
+		this.log.addSale(completedSale);
+		this.externalInventorySystem.updateInventory(completedSale);
+		this.externalAccountingSystem.updateAccounting(completedSale);
+		return completedSale.getChange();		
 	}
 
 }

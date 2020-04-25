@@ -40,8 +40,8 @@ public class View {
 	
 	public void payment (int amount) {
 		PaymentDTO amountPaid = new PaymentDTO(amount);
-		this.controller.payment(amountPaid);
-		
+		double change = this.controller.payment(amountPaid);
+		System.out.println("Change: " + change);		
 	}
 	
 	private void displayItem(ItemDTO item) {
