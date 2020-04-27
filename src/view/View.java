@@ -41,7 +41,7 @@ public class View {
 	public void payment (int amount) {
 		PaymentDTO amountPaid = new PaymentDTO(amount);
 		double change = this.controller.payment(amountPaid);
-		System.out.println("Change: " + change);		
+		System.out.println(String.format("Change: %.2f$", change));		
 	}
 	
 	private void displayItem(ItemDTO item) {

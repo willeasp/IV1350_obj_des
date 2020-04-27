@@ -46,7 +46,6 @@ public class Sale {
 			if(!equalID)
 				this.itemList.addLast(newItem);
 		}
-		
 		updateInfo();
 	}
 	
