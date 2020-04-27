@@ -1,5 +1,10 @@
 package dto;
 
+/**
+ * Holds item information.
+ * @author Dell
+ *
+ */
 public class ItemDTO {
 
 	private int itemIdentifier;

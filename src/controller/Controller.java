@@ -50,6 +50,10 @@ public class Controller {
 		return item;		
 	}
 
+	/**
+	 * 
+	 * @return Current state of the sale.
+	 */
 	public SaleDTO endSale() {
 		return getCurrentSale();
 	}
@@ -62,6 +66,11 @@ public class Controller {
 
 	}
 
+	/**
+	 * Declare payment of sale.
+	 * @param amountPaid The amount payed.
+	 * @return	Amount of change to be given back to the customer.
+	 */
 	public double payment(PaymentDTO amountPaid) {
 		this.register.increaseBalance(amountPaid);
 		SaleDTO completedSale = this.sale.saleCompleted(amountPaid);

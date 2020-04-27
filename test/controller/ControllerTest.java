@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import dto.DiscountDTO;
+import dto.ItemEntryDTO;
+import dto.PaymentDTO;
+import dto.SaleDTO;
 import integration.DiscountDatabase;
 import integration.ExternalAccountingSystem;
 import integration.ExternalInventorySystem;
@@ -40,28 +43,34 @@ class ControllerTest {
 	}
 
 	@Test
-	final void testRegisterItem() {
-		fail("Not yet implemented"); // TODO
+	final void testRegisterItemID() {
+		contr.startNewSale();
+		ItemEntryDTO itemEntry = new ItemEntryDTO(55555, 5);
+		contr.registerItem(itemEntry);
+		int itemID = contr.getCurrentSale().getItemList().getFirst().getItemIdentifier();
+		assertTrue(itemID == itemEntry.getItemIdentifier(), "Item was not registered correctly.");
+	}
+	
+	@Test
+	final void testRegisterItemQuantity() {
+		contr.startNewSale();
+		ItemEntryDTO itemEntry = new ItemEntryDTO(55555, 5);
+		contr.registerItem(itemEntry);
+		contr.registerItem(new ItemEntryDTO(55555, 2));
+		int itemQuantity = contr.getCurrentSale().getItemList().getFirst().getQuantity();
+		assertTrue(itemQuantity == 7, "Item quantity was not updated.");
 	}
 
 	@Test
-	final void testEndSale() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	final void testGetCurrentSale() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	final void testDiscountRequest() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	final void testPayment() {
-		fail("Not yet implemented"); // TODO
+	final void testPaymentMaxValue() {
+		contr.startNewSale();
+		ItemEntryDTO itemEntry = new ItemEntryDTO(55555, 5);
+		contr.registerItem(itemEntry);
+		contr.registerItem(new ItemEntryDTO(55555, 2));
+		PaymentDTO amountPaid = new PaymentDTO(Integer.MAX_VALUE);
+		boolean result = contr.payment(amountPaid) < 0;
+		assertFalse(result, "The change back was less then zero");
+		contr.payment(amountPaid);
 	}
 
 }

@@ -51,7 +51,7 @@ public class ExternalInventorySystem {
 	}
 
 	public void updateInventory(SaleDTO completedSale) {
-
+		
 	}
 
 	public ExternalInventorySystem() {

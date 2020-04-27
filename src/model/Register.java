@@ -6,6 +6,10 @@ public class Register {
 
 	private double balance;
 
+	/**
+	 * Increases the amount present in the register.
+	 * @param amountPaid	The amount to be added to the register.
+	 */
 	public void increaseBalance(PaymentDTO amountPaid) {
 		this.balance += amountPaid.getAmount();
 	}

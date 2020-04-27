@@ -21,6 +21,7 @@ public class SaleDTO {
 	private String storeName;
 	private String storeAddress;
 	private java.time.LocalDate date;
+	private int amountPaid;
 	
 	/**
 	 * Carrier for Sale information
@@ -36,6 +37,7 @@ public class SaleDTO {
 		this.storeName = Sale.getStoreName();
 		this.storeAddress = Sale.getStoreAddress();
 		this.date = sale.getDate();
+		this.amountPaid = sale.getAmountPaid();
 	}
 	
 //	@Override
@@ -75,6 +77,9 @@ public class SaleDTO {
 	}
 	public java.time.LocalDate getDate() {
 		return date;
+	}
+	public int getAmountPaid() {
+		return amountPaid;
 	}
 	
 }
