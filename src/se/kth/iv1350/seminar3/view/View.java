@@ -50,12 +50,12 @@ public class View {
 	
 	private void displayCurrentSale() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Total: " + this.currentSale.gettotalPrice() + "$  |  of which VAT: " + this.currentSale.getTotalVAT() + "$");
 		
-		sb.append("\n\nItems: \n");
+		sb.append("\nItems: \n");
 		for(ItemDTO item : this.currentSale.getItemList()) {
 			sb.append(item.getName() + ", " + item.getPrice() + "$ * " + item.getQuantity() + " : " + item.getPrice()*item.getQuantity() + "$\n");
 		}
+		sb.append("\nTotal: " + this.currentSale.gettotalPrice() + "$  |  of which VAT: " + this.currentSale.getTotalVAT() + "$\n");
 		sb.append("\n***************************************\n");
 		System.out.println(sb.toString());
 	}
