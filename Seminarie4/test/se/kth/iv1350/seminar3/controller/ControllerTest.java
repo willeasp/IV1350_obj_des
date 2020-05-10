@@ -8,16 +8,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import se.kth.iv1350.seminar3.controller.Controller;
-import se.kth.iv1350.seminar3.dto.DiscountDTO;
 import se.kth.iv1350.seminar3.dto.ItemEntryDTO;
 import se.kth.iv1350.seminar3.dto.PaymentDTO;
-import se.kth.iv1350.seminar3.dto.SaleDTO;
 import se.kth.iv1350.seminar3.integration.DiscountDatabase;
 import se.kth.iv1350.seminar3.integration.ExternalAccountingSystem;
 import se.kth.iv1350.seminar3.integration.ExternalInventorySystem;
+import se.kth.iv1350.seminar3.integration.ItemNotFoundException;
 import se.kth.iv1350.seminar3.integration.Printer;
-import se.kth.iv1350.seminar3.model.Sale;
 
 class ControllerTest {
 	private Controller contr;
@@ -44,7 +41,7 @@ class ControllerTest {
 	}
 
 	@Test
-	final void testRegisterItemID() {
+	final void testRegisterItemID() throws ItemNotFoundException, OperationFailedException {
 		contr.startNewSale();
 		ItemEntryDTO itemEntry = new ItemEntryDTO(55555, 5);
 		contr.registerItem(itemEntry);
@@ -53,17 +50,16 @@ class ControllerTest {
 	}
 	
 	@Test
-	final void testRegisterItemQuantity() {
+	final void testRegisterItemQuantity() throws ItemNotFoundException, OperationFailedException {
 		contr.startNewSale();
-		ItemEntryDTO itemEntry = new ItemEntryDTO(55555, 5);
-		contr.registerItem(itemEntry);
+		contr.registerItem(new ItemEntryDTO(55555, 5));
 		contr.registerItem(new ItemEntryDTO(55555, 2));
 		int itemQuantity = contr.getCurrentSale().getItemList().getFirst().getQuantity();
 		assertTrue(itemQuantity == 7, "Item quantity was not updated.");
 	}
 
 	@Test
-	final void testPaymentMaxValue() {
+	final void testPaymentMaxValue() throws ItemNotFoundException, OperationFailedException {
 		contr.startNewSale();
 		ItemEntryDTO itemEntry = new ItemEntryDTO(55555, 5);
 		contr.registerItem(itemEntry);

@@ -8,6 +8,8 @@ import se.kth.iv1350.seminar3.dto.SaleDTO;
 import se.kth.iv1350.seminar3.integration.DiscountDatabase;
 import se.kth.iv1350.seminar3.integration.ExternalAccountingSystem;
 import se.kth.iv1350.seminar3.integration.ExternalInventorySystem;
+import se.kth.iv1350.seminar3.integration.InventoryException;
+import se.kth.iv1350.seminar3.integration.ItemNotFoundException;
 import se.kth.iv1350.seminar3.integration.Printer;
 import se.kth.iv1350.seminar3.model.Register;
 import se.kth.iv1350.seminar3.model.Sale;
@@ -47,9 +49,16 @@ public class Controller {
 	 * Adds item to Sale if found in the external inventory system. 	 
 	 * @param itemEntry Container for item identifier and quantity.
 	 * @return The item found in the external inventory system.
+	 * @throws OperationFailedException If failed to retrieve information from <code>ExternalInventorySystem</code>.
+	 * @throws ItemNotFoundException If the an item with the specified Item ID is not found.
 	 */
-	public ItemDTO registerItem(ItemEntryDTO itemEntry) {
-		ItemDTO item = this.externalInventorySystem.getItem(itemEntry);
+	public ItemDTO registerItem(ItemEntryDTO itemEntry) throws ItemNotFoundException, OperationFailedException {
+		ItemDTO item;
+		try {
+			item = this.externalInventorySystem.getItem(itemEntry);
+		} catch (InventoryException e) {
+			throw new OperationFailedException("Something went wrong accessing the Inventory.", e);
+		}
 		this.sale.addItem(item);
 		return item;		
 	}

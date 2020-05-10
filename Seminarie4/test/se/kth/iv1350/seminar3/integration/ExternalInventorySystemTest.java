@@ -25,33 +25,34 @@ class ExternalInventorySystemTest {
 	}
 
 	@Test
-	final void testGetExistingItem() {
+	final void testGetExistingItem() throws ItemNotFoundException {
 		ItemEntryDTO itemEntry = new ItemEntryDTO(55555, 5);
-		ItemDTO item = this.externalInventorySystem.getItem(itemEntry);
+		ItemDTO item = null;
+		item = this.externalInventorySystem.getItem(itemEntry);
 		assertTrue(item.itemFound(), "Item was not found");
 	}
 	
 	@Test
 	final void testGetNonexistantItem() {
-		ItemEntryDTO itemEntry = new ItemEntryDTO(Integer.MAX_VALUE, 5);
-		ItemDTO item = this.externalInventorySystem.getItem(itemEntry);
-		boolean result = item.itemFound();
-		assertFalse(result, "A nonexistent item declared found.");
+		assertThrows(ItemNotFoundException.class, () -> {
+			ItemEntryDTO itemEntry = new ItemEntryDTO(Integer.MAX_VALUE, 5);
+			ItemDTO item = this.externalInventorySystem.getItem(itemEntry);
+		}, "Found a nonexistent item.");
 	}
 	
 	@Test
-	final void testGetExistingItemQuantity() {
+	final void testGetExistingItemQuantity() throws ItemNotFoundException{ 
 		ItemEntryDTO itemEntry = new ItemEntryDTO(55555, 5);
 		ItemDTO item = this.externalInventorySystem.getItem(itemEntry);
 		assertTrue(item.itemFound(), "Item did not have the correct quantity");
 	}
 	
 	@Test
-	final void testGetNonexistantItemQuantity() {
-		ItemEntryDTO itemEntry = new ItemEntryDTO(Integer.MAX_VALUE, 5);
-		ItemDTO item = this.externalInventorySystem.getItem(itemEntry);
-		boolean result = item.getQuantity() == 0;
-		assertTrue(result, "A nonexistent had a quantity");
+	final void testInventoryException() {
+		assertThrows(InventoryException.class, () -> {
+			ItemEntryDTO itemEntry = new ItemEntryDTO(404, 5);
+			ItemDTO item = this.externalInventorySystem.getItem(itemEntry);
+		}, "Returned item when no connection to inventory system.");
 	}
 
 }

@@ -10,7 +10,7 @@ import se.kth.iv1350.seminar3.dto.SaleDTO;
  */
 public class ExternalInventorySystem {
 
-	public ItemDTO getItem(ItemEntryDTO itemEntry) {
+	public ItemDTO getItem(ItemEntryDTO itemEntry) throws ItemNotFoundException {
 		if(itemEntry.getItemIdentifier() == 42069) {
 			ItemDTO item = new ItemDTO(	itemEntry.getItemIdentifier(), 
 					"Senapslök", 
@@ -41,15 +41,11 @@ public class ExternalInventorySystem {
 					true									);
 			return item;
 		}
+		if(itemEntry.getItemIdentifier() == 404) {
+			throw new InventoryException("Could not access the inventory.");
+		}
 		else {
-			ItemDTO item = new ItemDTO(	itemEntry.getItemIdentifier(), 
-					"", 
-					0.0, 
-					0, 
-					"", 
-					0.0, 
-					false									);
-			return item;
+			throw new ItemNotFoundException(itemEntry);
 		}
 		
 	}
