@@ -9,7 +9,7 @@ public class OperationFailedException extends Exception {
 	 * @param msg Describes what happened.
 	 * @param origin Cause of the exception.
 	 */
-	public OperationFailedException(String msg, Exception origin) {
-		super(msg, origin);
+	public OperationFailedException(String msg, Exception cause) {
+		super(msg, cause);
 	}
 }

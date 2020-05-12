@@ -10,8 +10,19 @@ import se.kth.iv1350.seminar3.dto.SaleDTO;
  */
 public class DiscountDatabase {
 
+	/**
+	 * Requests a discount
+	 * @param customer The ID of a customer
+	 * @param currentSale
+	 * @return
+	 */
 	public DiscountDTO discountRequest(CustomerDTO customer, SaleDTO currentSale) {
-		return null;
+		if (customer.getCustomerID() == 710123) {
+			return new NiceCalculator().calculateDiscount(customer);
+		}
+		else {
+			return new BadCalculator().calculateDiscount(customer);
+		}
 	}
 
 	public DiscountDatabase() {

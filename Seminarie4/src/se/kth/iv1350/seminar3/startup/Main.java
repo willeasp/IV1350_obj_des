@@ -15,7 +15,7 @@ import se.kth.iv1350.seminar3.view.View;
 public class Main {
 	public static void main(String[] args) {
 		ExternalAccountingSystem externalAccountingSystem = new ExternalAccountingSystem();
-		ExternalInventorySystem externalInventorySystem = new ExternalInventorySystem();
+		ExternalInventorySystem externalInventorySystem = ExternalInventorySystem.getExternalInventorySystem();
 		DiscountDatabase discountDB = new DiscountDatabase();
 		Printer printer = new Printer();
 		
@@ -24,7 +24,9 @@ public class Main {
 		
 		// simulating the cashier pressing buttons
 		//view.doStuffLikeACashier();
-		view.doOtherStuff();
+		//view.sampleRunTaskOne();
+		//view.doOtherStuff();
+		view.sampleRunDiscount();
 	}
 
 }

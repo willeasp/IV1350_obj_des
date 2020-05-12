@@ -31,12 +31,12 @@ public class View {
 			item = this.controller.registerItem(itemEntry);
 			displayItem(item);
 			this.currentSale = this.controller.getCurrentSale();
+			displayCurrentSale();
 		} catch (ItemNotFoundException e) {
-			handleException("Item not found. ID: " + e.getItemEntry().getItemIdentifier(), e);
+			handleException("Item not found. ItemID: " + e.getItemEntry().getItemIdentifier(), e);
 		} catch (OperationFailedException e) {
 			handleException("Could not register item. Check connection and try again.", e);
 		}
-		displayCurrentSale();
 	}
 	
 	private void handleException (String message, Exception exception) {
@@ -69,11 +69,9 @@ public class View {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("\nItems: \n");
-		for(ItemDTO item : this.currentSale.getItemList()) {
-			sb.append(	item.getName() + ", " + 
-						item.getPrice() + "$ * " + 
-						item.getQuantity() + " : " + 
-						item.getPrice()*item.getQuantity() + "$\n");
+		for (ItemDTO item : this.currentSale.getItemList()) {
+			sb.append(item.getName() + ", " + item.getPrice() + "$ * " + item.getQuantity() + " : "
+					+ item.getPrice() * item.getQuantity() + "$\n");
 		}
 		sb.append("\nTotal: " + this.currentSale.gettotalPrice() + 
 				"$  |  of which VAT: " + this.currentSale.getTotalVAT() + "$\n");
@@ -109,21 +107,41 @@ public class View {
 	
 	public void doOtherStuff() {
 		this.startNewSale();
+		System.out.println("\n'Sale for 20$'");
 		this.payment(20);
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		System.out.println("\n'Sale for 50$'");
 		this.payment(50);
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		System.out.println("\n'Sale for 100$'");
 		this.payment(100);
+	}
+	
+	public void sampleRunTaskOne() {
+		this.startNewSale();
+		
+		System.out.println("'Register Senapslök'");
+		this.registerItem(42069, 2);	// Register 2 more Senapslök
+		
+		System.out.println("'Try to register an item that does not exist'");
+		this.registerItem(11111, 3);	// Try to register an item that does not exist
+		
+		System.out.println("'Try to register item but not connecting to Inventory System'");
+		this.registerItem(404, 1);
+		
+	}
+	
+	public void sampleRunDiscount() {
+		this.startNewSale();
+		
+		System.out.println("'Register Senapslök'");
+		this.registerItem(42069, 3);	// Register Senapslök, 3 items
+		
+		System.out.println("'Discount Request using NiceCalculator'");
+		this.controller.discountRequest(new CustomerDTO(710123));
+		this.currentSale = this.controller.getCurrentSale();
+		displayCurrentSale();
+		
 	}
 	
 }

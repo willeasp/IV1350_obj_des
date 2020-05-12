@@ -97,8 +97,13 @@ public class Sale {
 		return new SaleDTO(this);
 	}
 
+	/**
+	 * Lessens total price by discount amount.
+	 * @param discount
+	 */
 	public void applyDiscount(DiscountDTO discount) {
-
+		this.discount = discount;
+		this.totalPrice *= (1 - discount.getDiscountPercentage());
 	}
 
 	/**

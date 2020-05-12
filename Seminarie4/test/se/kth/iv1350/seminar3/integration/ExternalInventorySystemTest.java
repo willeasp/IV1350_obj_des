@@ -16,7 +16,7 @@ class ExternalInventorySystemTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		this.externalInventorySystem = new ExternalInventorySystem();
+		this.externalInventorySystem = ExternalInventorySystem.getExternalInventorySystem();
 	}
 
 	@AfterEach

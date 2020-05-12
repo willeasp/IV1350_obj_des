@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.kth.iv1350.seminar3.dto.CustomerDTO;
+import se.kth.iv1350.seminar3.dto.DiscountDTO;
 import se.kth.iv1350.seminar3.dto.ItemDTO;
 import se.kth.iv1350.seminar3.dto.ItemEntryDTO;
 import se.kth.iv1350.seminar3.dto.PaymentDTO;
@@ -26,7 +27,7 @@ import se.kth.iv1350.seminar3.model.SaleObserver;
 public class Controller {
 	private Sale sale;
 	private SaleLog log;
-	private DiscountDatabase discountDatabase;
+	private DiscountDatabase discountDatabase = new DiscountDatabase();
 	private ExternalInventorySystem externalInventorySystem;
 	private ExternalAccountingSystem externalAccountingSystem;
 	private Register register;
@@ -84,7 +85,8 @@ public class Controller {
 	}
 
 	public void discountRequest(CustomerDTO customer) {
-
+		DiscountDTO discount = this.discountDatabase.discountRequest(customer, this.sale.getCurrent());
+		this.sale.applyDiscount(discount);
 	}
 
 	/**
@@ -107,6 +109,8 @@ public class Controller {
 	 */
 	public void addSaleObserver(SaleObserver saleObs) {
 		this.saleObservers.add(saleObs);
+		if(this.sale != null)
+			this.sale.addSaleObserver(saleObs);
 	}
 
 }

@@ -8,12 +8,12 @@ public class CustomerDTO {
 
 	private int customerID;
 
-	public void CustomerDTO(int customerID) {
-
+	public CustomerDTO(int customerID) {
+		this.customerID = customerID;
 	}
 
 	public int getCustomerID() {
-		return 0;
+		return customerID;
 	}
 
 }

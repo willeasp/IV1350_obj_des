@@ -17,6 +17,7 @@ public class ErrorMessageHandler {
 		sb.append(" ERROR: ");
 		sb.append(msg);
 		System.out.println(sb);
+		System.out.println();
 	}
 	
 	private LocalTime makeTime() {

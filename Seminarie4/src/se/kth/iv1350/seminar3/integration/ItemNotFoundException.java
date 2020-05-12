@@ -18,6 +18,10 @@ public class ItemNotFoundException extends Exception {
 		this.itemEntryNotFound = itemEntry;
 	}
 	
+	/**
+	 * 
+	 * @return The item entry that did not exist.
+	 */
 	public ItemEntryDTO getItemEntry () {
 		return this.itemEntryNotFound;
 	}

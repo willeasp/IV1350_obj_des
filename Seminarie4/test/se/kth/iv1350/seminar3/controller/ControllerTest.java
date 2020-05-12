@@ -29,7 +29,7 @@ class ControllerTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		ExternalInventorySystem extinvsys = new ExternalInventorySystem();
+		ExternalInventorySystem extinvsys = ExternalInventorySystem.getExternalInventorySystem();
 		ExternalAccountingSystem extaccsys = new ExternalAccountingSystem();
 		DiscountDatabase discountDB = new DiscountDatabase();
 		Printer printer = new Printer();

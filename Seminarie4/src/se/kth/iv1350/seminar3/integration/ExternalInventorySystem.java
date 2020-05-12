@@ -9,6 +9,7 @@ import se.kth.iv1350.seminar3.dto.SaleDTO;
  *
  */
 public class ExternalInventorySystem {
+	private static final ExternalInventorySystem INSTANCE = new ExternalInventorySystem();
 
 	public ItemDTO getItem(ItemEntryDTO itemEntry) throws ItemNotFoundException {
 		if(itemEntry.getItemIdentifier() == 42069) {
@@ -53,8 +54,12 @@ public class ExternalInventorySystem {
 	public void updateInventory(SaleDTO completedSale) {
 		
 	}
+	
+	public static ExternalInventorySystem getExternalInventorySystem() {
+		return INSTANCE;
+	}
 
-	public ExternalInventorySystem() {
+	private ExternalInventorySystem() {
 	}
 
 }

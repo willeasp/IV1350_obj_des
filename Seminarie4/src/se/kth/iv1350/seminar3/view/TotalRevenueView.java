@@ -16,7 +16,6 @@ public class TotalRevenueView implements SaleObserver {
 	 */
 	public TotalRevenueView() {
 		totalRevenue = 0;
-		updateView();
 	}
 
 	@Override

@@ -5,20 +5,20 @@ package se.kth.iv1350.seminar3.dto;
  */
 public class DiscountDTO {
 
-	private float discountPercentage;
+	private double discountPercentage;
 
-	private float discountAmount;
-
-	public void DiscountDTO(float discountPercentage, float discountAmount) {
-
+	/**
+	 * Creates an instance
+	 * @param discountPercentage the amount of discount.
+	 */
+	public DiscountDTO(double discountPercentage) {
+		this.discountPercentage = discountPercentage;
 	}
 
-	public float getDiscountAmount() {
-		return 0;
+	public double getDiscountPercentage() {
+		return discountPercentage;
 	}
 
-	public float getDiscountPercentage() {
-		return 0;
-	}
+	
 
 }
