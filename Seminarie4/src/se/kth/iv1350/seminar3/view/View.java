@@ -1,5 +1,7 @@
 package se.kth.iv1350.seminar3.view;
 
+import java.util.concurrent.TimeUnit;
+
 import se.kth.iv1350.seminar3.controller.Controller;
 import se.kth.iv1350.seminar3.controller.OperationFailedException;
 import se.kth.iv1350.seminar3.dto.CustomerDTO;
@@ -8,14 +10,18 @@ import se.kth.iv1350.seminar3.dto.ItemEntryDTO;
 import se.kth.iv1350.seminar3.dto.PaymentDTO;
 import se.kth.iv1350.seminar3.dto.SaleDTO;
 import se.kth.iv1350.seminar3.integration.ItemNotFoundException;
+import se.kth.iv1350.seminar4.util.FileLogger;
+import se.kth.iv1350.seminar4.util.Logger;
 
 public class View {
 	private Controller controller;
 	private SaleDTO currentSale;
 	private ErrorMessageHandler errorMsgHandler = new ErrorMessageHandler();
+	private Logger logger = FileLogger.getFileLogger();
 
 	public View (Controller contr) {
 		this.controller = contr;
+		this.controller.addSaleObserver(new TotalRevenueView());
 	}
 	
 	public void registerItem(int itemIdentifier, int quantity) {
@@ -26,11 +32,16 @@ public class View {
 			displayItem(item);
 			this.currentSale = this.controller.getCurrentSale();
 		} catch (ItemNotFoundException e) {
-			this.errorMsgHandler.showErrorMsg("Item not found. ID: " + e.getItemEntry().getItemIdentifier());
+			handleException("Item not found. ID: " + e.getItemEntry().getItemIdentifier(), e);
 		} catch (OperationFailedException e) {
-			this.errorMsgHandler.showErrorMsg("Could not register item. Check connection and try again.");
+			handleException("Could not register item. Check connection and try again.", e);
 		}
 		displayCurrentSale();
+	}
+	
+	private void handleException (String message, Exception exception) {
+		this.errorMsgHandler.showErrorMsg(message);
+		this.logger.log(exception);
 	}
 	
 	public void startNewSale() {
@@ -48,7 +59,10 @@ public class View {
 	}
 	
 	private void displayItem(ItemDTO item) {
-		System.out.println(item.getName() + ", " + item.getDescription() + " : " + item.getPrice() + "$, " + item.getVAT()*100 + "% VAT\n");
+		System.out.println(	item.getName() + ", " + 
+							item.getDescription() + " : " + 
+							item.getPrice() + "$, " + 
+							item.getVAT()*100 + "% VAT\n");
 	}
 	
 	private void displayCurrentSale() {
@@ -56,9 +70,13 @@ public class View {
 		
 		sb.append("\nItems: \n");
 		for(ItemDTO item : this.currentSale.getItemList()) {
-			sb.append(item.getName() + ", " + item.getPrice() + "$ * " + item.getQuantity() + " : " + item.getPrice()*item.getQuantity() + "$\n");
+			sb.append(	item.getName() + ", " + 
+						item.getPrice() + "$ * " + 
+						item.getQuantity() + " : " + 
+						item.getPrice()*item.getQuantity() + "$\n");
 		}
-		sb.append("\nTotal: " + this.currentSale.gettotalPrice() + "$  |  of which VAT: " + this.currentSale.getTotalVAT() + "$\n");
+		sb.append("\nTotal: " + this.currentSale.gettotalPrice() + 
+				"$  |  of which VAT: " + this.currentSale.getTotalVAT() + "$\n");
 		sb.append("\n***************************************\n");
 		System.out.println(sb.toString());
 	}
@@ -89,5 +107,23 @@ public class View {
 		this.payment(1000);				// Pay 1000 dollars #money
 	}
 	
-
+	public void doOtherStuff() {
+		this.startNewSale();
+		this.payment(20);
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.payment(50);
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.payment(100);
+	}
+	
 }

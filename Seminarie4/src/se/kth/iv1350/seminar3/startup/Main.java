@@ -23,8 +23,8 @@ public class Main {
 		View view = new View(contr);
 		
 		// simulating the cashier pressing buttons
-		view.doStuffLikeACashier();
-		
+		//view.doStuffLikeACashier();
+		view.doOtherStuff();
 	}
 
 }

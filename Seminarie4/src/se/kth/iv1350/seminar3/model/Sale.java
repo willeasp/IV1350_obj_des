@@ -1,6 +1,8 @@
 package se.kth.iv1350.seminar3.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import se.kth.iv1350.seminar3.dto.DiscountDTO;
 import se.kth.iv1350.seminar3.dto.ItemDTO;
@@ -24,6 +26,7 @@ public class Sale {
 	private static String storeAddress = "Matgatan 3000";
 	private java.time.LocalDate date;
 	private Printer printer;
+	private List<SaleObserver> saleObservers = new ArrayList<>();
 
 	public Sale(Printer printer) {
 		this.startTime = java.time.LocalTime.now();
@@ -98,13 +101,34 @@ public class Sale {
 
 	}
 
+	/**
+	 * Registers payment and prints receipt.
+	 * @param amountPaid The amount paid.
+	 * @return The current state of the Sale.
+	 */
 	public SaleDTO saleCompleted(PaymentDTO amountPaid) {
 		this.amountPaid = amountPaid.getAmount();
 		this.change = this.amountPaid - this.totalPrice;
 		SaleDTO completedSale = new SaleDTO(this);
 		ReceiptDTO receipt = new ReceiptDTO(completedSale);
 		this.printer.printReceipt(receipt);
+		notifyObservers();
 		return completedSale;
+	}
+	
+	private void notifyObservers() {
+		SaleDTO completedSale = new SaleDTO(this);
+		for(SaleObserver saleObs : saleObservers) {
+			saleObs.newPayment(completedSale);
+		}
+	}
+	
+	/**
+	 * Adds an observer to the list of observers.
+	 * @param saleObs the Saleobserver that will observe the sale.
+	 */
+	public void addSaleObserver(SaleObserver saleObs) {
+		this.saleObservers.add(saleObs);
 	}
 	
 

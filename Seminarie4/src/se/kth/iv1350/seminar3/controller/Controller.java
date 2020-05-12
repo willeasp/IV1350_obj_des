@@ -1,5 +1,8 @@
 package se.kth.iv1350.seminar3.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.kth.iv1350.seminar3.dto.CustomerDTO;
 import se.kth.iv1350.seminar3.dto.ItemDTO;
 import se.kth.iv1350.seminar3.dto.ItemEntryDTO;
@@ -14,6 +17,7 @@ import se.kth.iv1350.seminar3.integration.Printer;
 import se.kth.iv1350.seminar3.model.Register;
 import se.kth.iv1350.seminar3.model.Sale;
 import se.kth.iv1350.seminar3.model.SaleLog;
+import se.kth.iv1350.seminar3.model.SaleObserver;
 
 /**
  * Controller layer for the process sale.
@@ -27,6 +31,7 @@ public class Controller {
 	private ExternalAccountingSystem externalAccountingSystem;
 	private Register register;
 	private Printer printer;
+	private List<SaleObserver> saleObservers = new ArrayList<>();
 
 	public Controller (ExternalInventorySystem extinvsys, ExternalAccountingSystem extaccsys, DiscountDatabase discountDB, Printer printer) {
 		this.externalInventorySystem = extinvsys;
@@ -43,6 +48,9 @@ public class Controller {
 	 */
 	public void startNewSale() {
 		this.sale = new Sale(this.printer);
+		for(SaleObserver saleObs : saleObservers) {
+			sale.addSaleObserver(saleObs);
+		}
 	}
 
 	/**
@@ -91,6 +99,14 @@ public class Controller {
 		this.externalInventorySystem.updateInventory(completedSale);
 		this.externalAccountingSystem.updateAccounting(completedSale);
 		return completedSale.getChange();		
+	}
+	
+	/**
+	 * Adds an observer to the list of observers.
+	 * @param saleObs the Saleobserver that will observe the sale.
+	 */
+	public void addSaleObserver(SaleObserver saleObs) {
+		this.saleObservers.add(saleObs);
 	}
 
 }
