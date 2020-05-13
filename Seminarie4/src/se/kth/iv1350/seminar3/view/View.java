@@ -79,6 +79,9 @@ public class View {
 		System.out.println(sb.toString());
 	}
 	
+	/**
+	 * sample run for seminar 3.
+	 */
 	public void doStuffLikeACashier() {
 		System.out.println("'Start new sale'");
 		this.startNewSale();
@@ -105,6 +108,9 @@ public class View {
 		this.payment(1000);				// Pay 1000 dollars #money
 	}
 	
+	/**
+	 * Sample run for the Observer
+	 */
 	public void doOtherStuff() {
 		this.startNewSale();
 		

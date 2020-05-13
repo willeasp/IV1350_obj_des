@@ -18,6 +18,9 @@ public class TotalRevenueView implements SaleObserver {
 		totalRevenue = 0;
 	}
 
+	/**
+	 * Displays the total revenue from the sale.
+	 */
 	@Override
 	public void newPayment(SaleDTO completedSale) {
 		this.totalRevenue += completedSale.getAmountPaid() - completedSale.getChange();

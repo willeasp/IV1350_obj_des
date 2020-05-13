@@ -17,7 +17,7 @@ public class DiscountDatabase {
 	 * @return
 	 */
 	public DiscountDTO discountRequest(CustomerDTO customer, SaleDTO currentSale) {
-		if (customer.getCustomerID() == 710123) {
+		if (customer.getCustomerID() == 710123) {						// Kompispris för den jannen ;)
 			return new NiceCalculator().calculateDiscount(customer);
 		}
 		else {

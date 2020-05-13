@@ -28,6 +28,10 @@ public class Sale {
 	private Printer printer;
 	private List<SaleObserver> saleObservers = new ArrayList<>();
 
+	/**
+	 * Creates a new instance
+	 * @param printer For printing receipts.
+	 */
 	public Sale(Printer printer) {
 		this.startTime = java.time.LocalTime.now();
 		this.date = java.time.LocalDate.now();

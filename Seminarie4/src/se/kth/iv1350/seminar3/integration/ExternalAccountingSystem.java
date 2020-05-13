@@ -10,7 +10,7 @@ public class ExternalAccountingSystem {
 	private int income;
 
 	public void updateAccounting(SaleDTO completedSale) {
-		this.income += completedSale.getAmountPaid();
+		this.income += completedSale.getAmountPaid() - completedSale.getChange();
 	}
 
 	public ExternalAccountingSystem() {

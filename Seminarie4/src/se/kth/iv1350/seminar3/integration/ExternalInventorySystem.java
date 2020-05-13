@@ -55,6 +55,10 @@ public class ExternalInventorySystem {
 		
 	}
 	
+	/**
+	 * 
+	 * @return The only instance existing of the class.
+	 */
 	public static ExternalInventorySystem getExternalInventorySystem() {
 		return INSTANCE;
 	}
