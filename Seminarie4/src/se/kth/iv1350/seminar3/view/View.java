@@ -107,14 +107,20 @@ public class View {
 	
 	public void doOtherStuff() {
 		this.startNewSale();
-		System.out.println("\n'Sale for 20$'");
-		this.payment(20);
-		
-		System.out.println("\n'Sale for 50$'");
-		this.payment(50);
 		
 		System.out.println("\n'Sale for 100$'");
+		this.registerItem(42069, 1);
+		System.out.println("Pay 100$'");
 		this.payment(100);
+		
+		this.startNewSale();
+		
+		System.out.println("\n'Sale for 50$'");
+		this.registerItem(10721, 3);
+		System.out.println("Pay 50$'");
+		this.payment(50);
+		
+		
 	}
 	
 	public void sampleRunTaskOne() {

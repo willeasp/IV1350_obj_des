@@ -20,7 +20,7 @@ public class TotalRevenueView implements SaleObserver {
 
 	@Override
 	public void newPayment(SaleDTO completedSale) {
-		this.totalRevenue += completedSale.getAmountPaid();
+		this.totalRevenue += completedSale.getAmountPaid() - completedSale.getChange();
 		updateView();
 	}
 	

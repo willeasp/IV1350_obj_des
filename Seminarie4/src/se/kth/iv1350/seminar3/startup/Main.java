@@ -25,8 +25,8 @@ public class Main {
 		// simulating the cashier pressing buttons
 		//view.doStuffLikeACashier();
 		//view.sampleRunTaskOne();
-		//view.doOtherStuff();
-		view.sampleRunDiscount();
+		view.doOtherStuff();
+		//view.sampleRunDiscount();
 	}
 
 }
